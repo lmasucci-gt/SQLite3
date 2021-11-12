@@ -1,6 +1,12 @@
 import { Productos } from "../models/productos.js";
-import archivo from '../models/archivoProductos.js'
+//import archivo from '../models/archivoProductos.js' Lo guardo para persistir en txt
+import options from '../DB/Mysql/connection.js';
+import knex from 'knex';
+const orm =knex(options);
 
+//export const getProductos
+
+/* Persistencia en txt
 export const getProductos = async (req, res) => {
   try {
     const listaProductos = await archivo.read();
@@ -73,3 +79,4 @@ export const borrarProducto = async (req, res) => {
       console.log(error)
   }
 };
+*/
