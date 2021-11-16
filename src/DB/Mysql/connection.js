@@ -1,5 +1,7 @@
-const options ={
-    client: 'mysql',
+import mysql from 'mysql2';
+
+const options = {
+    client: 'mysql2',
     connection: {
       host : process.env.HOST,
       port : process.env.PORT,

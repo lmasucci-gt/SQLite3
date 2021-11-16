@@ -1,10 +1,104 @@
 import { Productos } from "../models/productos.js";
 //import archivo from '../models/archivoProductos.js' Lo guardo para persistir en txt
-import options from '../DB/Mysql/connection.js';
-import knex from 'knex';
-const orm =knex(options);
+import options from "../DB/Mysql/connection.js";
+import knex from "knex";
+const orm = knex(options);
 
-//export const getProductos
+/* PERSISTENCIA EN MYSQL */
+
+export const actualizarProductoMysql = async (req, res) => {
+  try {
+    const { title, price, thumbnail } = req.body;
+    const id = req.params.id;
+    await orm.from('productos').where('id','=', id).update({title:title, price: price, thumbnail:thumbnail});
+    if(!id) {
+      console.log("error: Producto no encontrado");
+      return res.status(404).json({msg: 'ID de producto no encontrado'});
+    } else {
+      return res.status(200).json({msg: 'Producto actualizado correctamente'})
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(404).json({msg: 'ID de producto no encontrado'});
+  } finally {
+    orm.destroy();
+  }
+}
+
+export const borrarProductoMysql = async (req, res) => {
+  try {
+    const id = req.params.id;
+    await orm.from('productos').where('id','=', id).del();
+    if (!id) {
+      console.log({msg: "error: Producto no encontrado"});
+    } else {
+      return res.status(200).json({msg: `Se borro correctamente el producto ID: ${id}`});
+    }
+  } catch (error) {
+      console.log(error);
+  }
+  finally {
+    orm.destroy();
+  }
+}
+
+export const getProductosMysql = async (req, res) => {
+  try {
+    const products = await orm.from("productos").select("*");
+    for (registro of products) {
+      console.log(
+        `${registro["id"]}. Marca: ${registro["title"]} - Precio $${registro["price"]}`
+      );
+    }
+    return res.status(200).json(products);
+  } catch (e) {
+    console.log("Error en select", e);
+    return res.status(404).json({ msg: "Error en select ", e });
+  } finally {
+    orm.destroy();
+  }
+};
+
+export const agregarProductoMysql = async (req, res) => {
+  try {
+    const product = await new Productos(
+      req.body.title,
+      req.body.price,
+      req.body.thumbnail
+    );
+
+    const tableOK = await createTableProductos();
+    if (tableOK) {
+      await orm("productos").insert(product);
+      console.log("Registro insertado");
+      orm.destroy();
+      return res.status(201).json({ msg: "Registro insertado" });
+    }
+  } catch (error) {
+    console.log(err);
+    return res.status(404).json({ msg: "Error en el insert ", e });
+  } finally {
+    orm.destroy();
+  }
+};
+
+export const createTableProductos = async (req, res) => {
+  try {
+    await orm.schema.createTableIfNotExists("productos", (table) => {
+      table.increments("id"),
+        table.string("title"),
+        table.integer("price"),
+        table.string("thumbnail");
+    });
+    console.log("TABLA CREADA");
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
+  } finally {
+    orm.destroy();
+  }
+};
 
 /* Persistencia en txt
 export const getProductos = async (req, res) => {
