@@ -9,12 +9,10 @@ export const getMensajesSQLite = async (req, res) => {
       let exists = await orm.schema.hasTable('mensajes')
       console.log(exists);
       if(!exists) {
-        orm.destroy();
         return {msg: 'Aun no tiene mensajes creados'};
       } else {
       const mensajes = await orm.from("mensajes").select("*");
       console.log('mensajes: ', mensajes);
-      orm.destroy();
       return mensajes;
       }
     } catch (e) {
@@ -49,7 +47,5 @@ export const getMensajesSQLite = async (req, res) => {
     } catch (error) {
       console.log(error);
       return { msg: "Error en el insert ", error };
-    } finally {
-      orm.destroy();
-    }
+    } 
   };

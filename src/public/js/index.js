@@ -40,38 +40,22 @@ function sendMsg() {
   }
 }
 
-function addProducto() {
-  let titleInput = document.getElementById("title").value;
-  let priceInput = document.getElementById("price").value;
-  let thumbnailInput = document.getElementById("thumbnail").value;
-  let producto = {
-    title: titleInput,
-    price: priceInput,
-    thumbnail: thumbnailInput,
-  };
-  fetch("http://localhost:8080/productos", {
-    method: "POST",
-    body: producto,
-    mode: "cors",
-  })
-    .then(function (response) {
-      if (response.ok) {
-        return response.text();
-      } else {
-        throw "Error en la llamada Ajax";
-      }
-    })
-    .then(function (texto) {
-      console.log(texto);
-    })
-    .catch(function (err) {
-      console.log(err);
-    });
-}
-
-
 const url = 'http://localhost:8080/productos';
 
+function getData () {fetch(url)
+.then(function(response) {
+  return response.json();
+})
+.then(function(myJson){
+  for (producto of myJson) {
+      let ul = document.getElementById("productos");
+      let li = document.createElement("li");
+      ul.appendChild(li);
+      li.innerHTML = `ID: ${producto.id} - Title: ${producto.title} - Price: ${producto.price} - Thumbnail: ${producto.thumbnail}`;
+ }}
+);
+}
+/*
 const getData = async () => {
     const response = await fetch(url, {
         headers: {
@@ -87,4 +71,4 @@ const getData = async () => {
         ul.appendChild(li);
         li.innerHTML = `ID: ${producto.id} - Title: ${producto.title} - Price: ${producto.price} - Thumbnail: ${producto.thumbnail}`;
     }
-}
+*/

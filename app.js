@@ -14,6 +14,7 @@ const io = new Server(server);
 
 app.use(Express.static("src/public"));
 app.use(Express.json());
+app.use(Express.urlencoded({extended: true}));
 app.use(cors(corsOptions));
 app.use("/productos", productosRouter);
 app.use(errorHandlerMiddleware);

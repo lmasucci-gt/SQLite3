@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -20,20 +21,14 @@
             <div>
                 <h3>Agregar productos</h3>
             </div>
-            <form class="formContainer">
-                <div>
+            <form class="formContainer" action="http://localhost:8080/productos" method="post">
                     <label>Title: </label>
-                    <input id="title" type="text">
-                </div>
-                <div>
+                    <input type="text" id="title" name="title"><br>
                     <label>Price: </label>
-                    <input id="price" type="number">
-                </div>
-                <div>
+                    <input name="price" id="price" type="number"><br>
                     <label class="form-label">Thumbnail: </label>
-                    <input id="thumbnail" type="text">
-                </div>
-                <button onclick="addProducto()" type='button'>Guardar</button>
+                    <input name="thumbnail" id="thumbnail" type="text"><br>
+                    <button type="submit">Guardar</button>
             </form>
         </div>
 

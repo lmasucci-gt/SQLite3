@@ -25,8 +25,6 @@ export const actualizarProductoMysql = async (req, res) => {
   } catch (error) {
     console.log(error);
     return res.status(404).json({ msg: "ID de producto no encontrado" });
-  } finally {
-    orm.destroy();
   }
 };
 
@@ -43,9 +41,7 @@ export const borrarProductoMysql = async (req, res) => {
     }
   } catch (error) {
     console.log(error);
-  } finally {
-    orm.destroy();
-  }
+  } 
 };
 
 export const getProductosMysql = async (req, res) => {
@@ -53,12 +49,10 @@ export const getProductosMysql = async (req, res) => {
     let exists = await orm.schema.hasTable('productos')
     console.log(exists);
     if(!exists) {
-      orm.destroy();
       return res.status(200).json({msg: 'Aun no tiene productos creados'});
     } else {
     const products = await orm.from("productos").select("*");
     console.log('products: ', products);
-    orm.destroy();
     return res.status(200).json(products);
     }
   } catch (e) {
@@ -69,13 +63,11 @@ export const getProductosMysql = async (req, res) => {
 
 export const agregarProductoMysql = async (req, res) => {
   try {
-    const product = new Productos(
-      req.body.title,
-      req.body.price,
-      req.body.thumbnail
-    );
-
+    const {title, price, thumbnail} = req.body;
+    const product = new Productos(title, price, thumbnail);
+    console.log("body!! ", title, price, thumbnail)
     const exists = await orm.schema.hasTable("productos");
+
     if (!exists) {
       const tableOk = await orm.schema.createTable("productos", (table) => {
         table.increments("id"),
@@ -86,18 +78,16 @@ export const agregarProductoMysql = async (req, res) => {
       if (tableOk) {
         await orm("productos").insert(product);
         console.log("Registro insertado");
-        return res.status(201).json({ msg: "Registro insertado" });
+        return res.status(201).json({ msg: "Registro insertado1" });
       }
     } else {
       await orm("productos").insert(product);
       console.log("Registro insertado");
-      return res.status(201).json({ msg: "Registro insertado" });
+      return res.status(201).json({ msg: "Registro insertado2" });
     }
   } catch (error) {
     console.log(error);
     return res.status(404).json({ msg: "Error en el insert ", error });
-  } finally {
-    orm.destroy();
   }
 };
 
