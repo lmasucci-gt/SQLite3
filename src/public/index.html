@@ -6,13 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="/css/styles.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.js"></script>  
     <script src="./socket.io/socket.io.js"></script>
     <script src="./js/index.js"></script>
     <title>Admin Panel</title>
 </head>
 
-<body>
+<body onLoad="getData()">
 
     <div class="containerStyle">
 
@@ -48,7 +47,7 @@
             </div>
         </div>
 
-         <!-- Seccion para Web Sockets -->
+        <!-- Seccion para Web Sockets -->
         <div class="containerList">
             <div>
                 <h3>Sala de chat</h3>
@@ -65,7 +64,6 @@
         </div>
 
     </div>
-
 </body>
 
 </html>

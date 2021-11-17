@@ -1,4 +1,6 @@
 import mysql from 'mysql2';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const options = {
     client: 'mysql2',
@@ -11,6 +13,6 @@ const options = {
     }
   };
 
-console.log('Conectando a la base de datos')
+console.log('Conectando a la base de datos Mysql')
 
 export default options;
