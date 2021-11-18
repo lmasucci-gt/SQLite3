@@ -25,9 +25,11 @@ server.listen(3000, () => {
 	console.log("Server WebSockets listening on port 3000");
   });
 
+
 io.on("connection", (socket) => {
   console.log("Usuario conectado");
   let mensajes = getMensajesSQLite();
+  console.log('cuanto vale mensajes', mensajes)
   socket.emit("chat", mensajes);
   socket.on("newMensaje", ({email, mensaje}) => {
     let msg = {
@@ -35,7 +37,7 @@ io.on("connection", (socket) => {
       time: `${moment().format("L")} ${moment().format("LTS")}`,
       mensaje: mensaje
     }    
-    agregarMensajeSQLite(msg);
+    //agregarMensajeSQLite(msg);
     io.sockets.emit("newChat", msg);
     });
 })

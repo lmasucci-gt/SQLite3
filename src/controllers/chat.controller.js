@@ -4,13 +4,13 @@ import options from "../DB/Sqlite3/connection.js";
 import knex from "knex";
 const orm = knex(options);
 
-export const getMensajesSQLite = async (req, res) => {
+export const getMensajesSQLite = async () => {
     try {
       let exists = await orm.schema.hasTable('mensajes')
-      console.log(exists);
       if(!exists) {
-        return {msg: 'Aun no tiene mensajes creados'};
+        return {email: 'Nada', time:'00:00', mensaje: 'Sin mensajes'};
       } else {
+        console.log("exists 3", exists);
       const mensajes = await orm.from("mensajes").select("*");
       console.log('mensajes: ', mensajes);
       return mensajes;
