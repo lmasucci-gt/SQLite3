@@ -1,0 +1,53 @@
+use eccommerce
+
+1) y 2)
+db.productos.insert([{"title":"Dog Selection Cachorro x21" , "price": 120  , "thumbnail":"www.dogselection.com.ar"},
+{"title":"Dog Selection Adulto Raza Pequeña x15" , "price": 580  , "thumbnail":"www.dogselection.com.ar"},
+{"title":"Pacha adulto mix x22" , "price": 900  , "thumbnail":"www.dogselection.com.ar"},
+{"title":"Pacha adulto mix x10" , "price": 1280  , "thumbnail":"www.dogselection.com.ar"},
+{"title":"Pacha adulto mix x15" , "price": 1700  , "thumbnail":"www.dogselection.com.ar"},
+{"title":"Pacha adulto cocktail x22" , "price": 2300  , "thumbnail":"www.dogselection.com.ar"},
+{"title":"Pacha cachorro cocktail x10" , "price": 2860  , "thumbnail":"www.dogselection.com.ar"},
+{"title":"Pacha gato pescado x10" , "price": 3350  , "thumbnail":"www.dogselection.com.ar"},
+{"title":"Pacha gato cocktail x10" , "price": 4320  , "thumbnail":"www.dogselection.com.ar"},
+{"title":"Dog Selection Adulto x21" , "price": 4920  , "thumbnail":"www.dogselection.com.ar"}])
+
+db.mensajes.insert([{"email":"lmasucci@globaltechsa.com.ar" , "mensaje": "Hola!"},
+{"email":"fperez@globaltechsa.com.ar" , "mensaje": "Buenas"},
+{"email":"rdistefano@globaltechsa.com.ar" , "mensaje": "Como va"},
+{"email":"asaleme@globaltechsa.com.ar" , "mensaje": "buenas team"},
+{"email":"lmasucci@globaltechsa.com.ar" , "mensaje": "arrancandoo"},
+{"email":"rdistefano@globaltechsa.com.ar" , "mensaje": "no se olviden de cambiar los precios"},
+{"email":"fperez@globaltechsa.com.ar" , "mensaje": "ya estoy en eso"},
+{"email":"rdistefano@globaltechsa.com.ar" , "mensaje": "perfecto"},
+{"email":"lmasucci@globaltechsa.com.ar" , "mensaje": "ahora yo lo ayudo"},
+{"email":"rdistefano" , "mensaje": "oka"}])
+
+3) 
+db.productos.find()
+db.mensajes.find()
+
+4)
+db.productos.count()
+db.mensajes.count()
+
+5)
+a)
+db.productos.insert({"title":"Dog Selection Cachorro x21 sabor carne" , "price": 120  , "thumbnail":"www.dogselection.com.ar"})
+
+b)
+db.productos.find({"title":"Dog Selection Cachorro x21 sabor carne"})
+db.productos.find({"price": {$lt: 1000}})
+db.productos.find({"price": {$gt: 1000, $lt:3000}})
+db.productos.find({"price": {$gt: 3000}})
+db.productos.find().skip(2).limit(1).sort({price:1})
+db.productos.update({},{$set:{"stock": 100}},{upsert:false,multi:true})
+db.productos.update({"price": {$gt: 4000}}, {$set: {"stock": 0}})
+db.productos.deleteMany({"price": {$lt: 1000}})
+
+6)
+db.createUser({user: 'pepe', pwd: 'asd456', roles: [{role: 'read', db:'ecomerce'}]})
+
+
+
+
